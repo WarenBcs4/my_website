@@ -26,7 +26,7 @@ def education_list(request):
 
 def hobbies_list(request):
     Hobby= Hobby.objects.filter(user=request.user) if request.user.is_authenticated else Hobby.objects.none()
-    return render(request, 'main/hobbies_list.html', {'hobbies': hobbies})
+    return render(request, 'main/hobbies_list.html', {'hobbies': Hobby})
 
 def friends_list(request):
     friends = []
