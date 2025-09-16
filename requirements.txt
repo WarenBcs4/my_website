@@ -1,0 +1,9 @@
+Django>=5.0,<6.0
+gunicorn
+psycopg2-binary
+whitenoise
+Django>=5.0,<6.0
+daphne>=4.0
+channels>=4.0L
+
+
