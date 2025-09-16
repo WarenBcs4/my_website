@@ -53,3 +53,5 @@ class ChatConsumer(AsyncWebsocketConsumer):
         except User.DoesNotExist:
             sender = None
         ChatMessage.objects.create(room_name=room_name, sender=sender, message=message)
+
+

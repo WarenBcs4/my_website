@@ -1,0 +1,21 @@
+{% extends 'main/base.html' %}
+{% block title %}Education - My Portfolio{% endblock %}
+{% block content %}
+<h1 class="mb-4"> Education background</h1>
+<div class="row">
+  {% for edu in educations %}
+  <div class="col-md-6 mb-3 ">
+    <div class="card shadow-sm h-100 f">
+      <div class="card-body text-primary">
+        <h5 class="card-title">{{ edu.institution }}</h5>
+        <h6 class="card-subtitle text-muted">{{ edu.degree }}</h6>
+        <p class="mt-2">{{ edu.details }}</p>
+        <p class="text-muted"><small>{{ edu.start_date }} - {{ edu.end_date|default:"Present" }}</small></p>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+    <p class="text-muted">No education records yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %}
+{% block title %}About - My Portfolio{% endblock %}
+{% block content %}
+<div class="text-center bg-secondary text-info">
+  <h1 class="mb-3 p-3">About Me</h1>
+  <p class="lead">Welcome to my personal portfolio. I'm passionate about coding, solving problems, and building impactful projects.</p>
+  <img src="{% if request.user.profile.avatar %}{{ request.user.profile.avatar.url }}{% else %}https://via.placeholder.com/200{% endif %}" 
+       alt="Profile Picture" class="rounded-circle shadow mt-3" width="200">
+  <div class="mt-3 mx-3 my-4 text-info fs-4 ">
+    <p class="p-3">{{ request.user.profile.bio }}</p>
+    <p class="mb-3"><strong>Location:</strong> {{ request.user.profile.location }}</p>
+  </div>
+</div>
+{% endblock %}

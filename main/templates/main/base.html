@@ -5,28 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Portfolio{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 70px; /* prevents content hiding under navbar */
+        font-family: "Open Sans", sans-serif;
+        font-style: normal;
+        font-optical-sizing: auto;
+        background: linear-gradient(135deg, #fff, #dedbd2);
+        
+        
+      }
+      footer {
+        margin-top: 140px;
+        
+      }
+ 
+
+
+
+    </style>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <!-- Fixed Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary fixed-top shadow-sm">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">MyPortfolio</a>
+        <a class="navbar-brand fw-bold" href="/">WAREN_Website</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-primary bg-secondary">
             <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
             <li class="nav-item"><a class="nav-link" href="/about/">About</a></li>
             <li class="nav-item"><a class="nav-link" href="/projects/">Projects</a></li>
             <li class="nav-item"><a class="nav-link" href="/education/">Education</a></li>
-            <li class="nav-item"><a class="nav-link" href="/hobbies/">Hobbies</a></li>
-            <li class="nav-item"><a class="nav-link" href="/friends/">Friends</a></li>
+            <li class="nav-item"><a class="nav-link" href="/hobbies/"></a></li>
+            <li class="nav-item"><a class="nav-link" href="/friends/">Chat with me</a></li>
           </ul>
           <ul class="navbar-nav">
             {% if request.user.is_authenticated %}
               <li class="nav-item"><a class="nav-link" href="/profile/{{ request.user.username }}/">{{ request.user.username }}</a></li>
-              <li class="nav-item"><a class="nav-link" href="/profile/edit/">Edit</a></li>
-              <li class="nav-item"><a class="nav-link" href="/accounts/logout/">Logout</a></li>
+              <li class="nav-item"><a class="nav-link" href="/profile/edit/"></a></li>
+              <li class="nav-item"><a class="nav-link" href="/accounts/logout/">waren9505@gmail.com</a></li>
             {% else %}
               <li class="nav-item"><a class="nav-link" href="/accounts/login/">Login</a></li>
             {% endif %}
@@ -35,11 +58,65 @@
       </div>
     </nav>
 
+    <!-- Main Content -->
     <main class="container py-4">
       {% block content %}{% endblock %}
     </main>
 
+    <!-- Footer -->
+    <footer class="mt-9 text-light bg-success">
+      <div class="container ">
+        <div class="row text-center text-md-start">
+          <!-- Social Media -->
+          <div class="col-md-4 mb-3">
+            <h5 class="mt-3 fs-2 text-primary">Find Me</h5>
+            <div class="mt-3 text-primary fw-2 fs-3">
+            <a href="#" class="text-light me-2"><i class="bi bi-facebook"></i></a>
+            <a href="https://x.com/OdhiamboWa25458?t=ABFyP8fIam2_MmsFdyypBg&s=09" class="text-light me-2"><i class="bi bi-twitter"></i></a>
+            <a href="https://www.linkedin.com/in/waren-odhiambo-0b76b9370" class="text-light me-2"><i class="bi bi-linkedin"></i></a>
+            <a href="https://github.com/WarenBcs4" class="text-light"><i class="bi bi-github"></i></a>
+            </div>
+          </div>
+
+          <!-- Skills -->
+          <div class="col-md-4 mb-3">
+            <h5 class="mt-3 fs-2 text-primary">Skills</h5>
+            <ul class="list-unstyled mt-3 fw-3 ">
+              <li>Django</li>
+              <li>Python</li>
+              <li>UI/UX Design</li>
+              <li>Content Strategy</li>
+              <li>front-end dev</li>
+              <li>excel data visualization</li>
+              <li>google spreadsheet automations</li>
+              <li>freshbooks online</li>
+            </ul>
+          </div>
+
+          <!-- Hobbies -->
+          <div class="col-md-4 mb-3">
+            <h5 class="mt-3 fs-2 text-primary">Hobbies</h5>
+            <ul class="list-unstyled  mt-3 fw-3 ">
+              <li>coding</li>
+              <li>mriting</li>
+              <li>mentoring</li>
+              <li>reading novels</li>
+              <li>travels</li>
+              <li>skirting</li>
+              <li>research</li>
+              <li>exploring Tech Trends</li>
+            </ul>
+          </div>
+        </div>
+        <hr class="bg-light">
+        <p class="text-center mb-0">&copy; {{ now|date:"Y" }} MyPortfolio. All rights reserved.</p>
+      </div>
+    </footer>
+   
+
+    <!-- Bootstrap + Icons -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     {% block scripts %}{% endblock %}
   </body>
 </html>

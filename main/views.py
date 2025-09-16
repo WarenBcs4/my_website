@@ -13,12 +13,19 @@ def home(request):
 def about(request):
     return render(request, 'main/about.html')
 
-def education_list(request):
-    educations = Education.objects.filter(user=request.user) if request.user.is_authenticated else Education.objects.none()
     return render(request, 'main/education_list.html', {'educations': educations})
 
+
+def education_list(request):
+    educations = Education.objects.all().order_by('-start_date')  # or filter by user if needed
+    return render(request, 'main/education_list.html', {
+        'educations': educations
+    })
+
+
+
 def hobbies_list(request):
-    hobbies = Hobby.objects.filter(user=request.user) if request.user.is_authenticated else Hobby.objects.none()
+    Hobby= Hobby.objects.filter(user=request.user) if request.user.is_authenticated else Hobby.objects.none()
     return render(request, 'main/hobbies_list.html', {'hobbies': hobbies})
 
 def friends_list(request):
@@ -88,3 +95,23 @@ def profile_view(request, username):
 def chat_room(request, room_name):
     messages = ChatMessage.objects.filter(room_name=room_name).order_by('timestamp')[:200]
     return render(request, 'main/chat_room.html', {'room_name': room_name, 'messages': messages})
+
+
+def projects_list(request):
+    project_list = Project.objects.all().order_by('-created_at')
+    upload_list = Upload.objects.all().order_by('-created_at')
+
+    # Paginate both separately
+    project_paginator = Paginator(project_list, 6)  # 6 projects per page
+    upload_paginator = Paginator(upload_list, 6)    # 6 uploads per page
+
+    project_page_number = request.GET.get('projects_page')
+    upload_page_number = request.GET.get('uploads_page')
+
+    project_page_obj = project_paginator.get_page(project_page_number)
+    upload_page_obj = upload_paginator.get_page(upload_page_number)
+
+    return render(request, 'main/projects_list.html', {
+        'project_page_obj': project_page_obj,
+        'upload_page_obj': upload_page_obj,
+    })

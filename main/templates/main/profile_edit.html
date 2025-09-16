@@ -1,0 +1,47 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Edit Profile — My Portfolio{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h1 class="mb-4">Edit Profile</h1>
+
+  <form method="post" enctype="multipart/form-data" class="card p-4 shadow-sm">
+    {% csrf_token %}
+    <h3>Profile Info</h3>
+    {{ form.as_p }}
+    <hr>
+
+    <h3>Education</h3>
+    {{ edu_formset.management_form }}
+    {% for form in edu_formset %}
+      <div class="border p-3 mb-3 rounded">
+        {{ form.as_p }}
+      </div>
+    {% endfor %}
+    <hr>
+
+    <h3>Hobbies</h3>
+    {{ hobby_formset.management_form }}
+    {% for form in hobby_formset %}
+      <div class="border p-3 mb-3 rounded dp-flex m-3">
+        {{ form.as_p }}
+      </div>
+    {% endfor %}
+    <hr>
+
+    <h3>Projects</h3>
+    {{ proj_formset.management_form }}
+    {% for form in proj_formset %}
+      <div class="border p-3 mb-3 rounded">
+        {{ form.as_p }}
+      </div>
+    {% endfor %}
+    <hr>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a href="{% url 'profile' request.user.username %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}
+

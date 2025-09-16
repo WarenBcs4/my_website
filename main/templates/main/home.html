@@ -1,39 +1,63 @@
 {% extends 'main/base.html' %}
+
 {% block title %}Home - My Portfolio{% endblock %}
+
 {% block content %}
-  <div class="row">
-    <div class="col-md-8">
-      <h2>Featured Projects</h2>
-      <div class="row">
-        {% for project in projects %}
-          <div class="col-md-6 mb-3">
-            <div class="card h-100">
-              {% if project.cover %}
-                <img src="{{ project.cover.url }}" class="card-img-top" alt="{{ project.title }}">
-              {% endif %}
-              <div class="card-body">
-                <h5 class="card-title">{{ project.title }}</h5>
-                <p class="card-text">{{ project.description|truncatechars:120 }}</p>
-                <a href="{% url 'project_detail' project.pk %}" class="btn btn-sm btn-primary">View</a>
-              </div>
-            </div>
-          </div>
-        {% endfor %}
-      </div>
-    </div>
-    <div class="col-md-4">
-      <h4>Latest Uploads</h4>
-      <ul class="list-group">
-        {% for up in latest_uploads %}
-          <li class="list-group-item">
-            <strong>{{ up.title }}</strong><br>
-            <small class="text-muted">{{ up.upload_type }} — {{ up.created_at|date:'SHORT_DATETIME_FORMAT' }}</small>
-            <div>
-              <a href="{{ up.file.url }}" target="_blank">Open</a>
-            </div>
-          </li>
-        {% endfor %}
-      </ul>
-    </div>
+<style>
+  .video-bg {
+    position: relative;
+    width: 100%;
+    height: 90vh;
+    overflow: hidden;
+    border-radius: 15px;
+  }
+
+  .video-bg video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6); /* darken video for readability */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .video-overlay h1 {
+    font-size: 3rem;
+    font-weight: 800;
+  }
+
+  .video-overlay p {
+    font-size: 1.2rem;
+    max-width: 700px;
+  }
+</style>
+
+<div class="video-bg">
+  <!-- 🔽 Replace src with your hosted Pinterest/YouTube/Static video -->
+  <video autoplay muted loop playsinline>
+    <source src="https://v1.pinimg.com/videos/mc/720p/fd/f3/49/fdf3493a0e6149073167ca878192ffe7.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <div class="video-overlay">
+    <h1>Waren Junior Dev</h1>
+    <p>Django _Dev | Creative writer| freelancer|AI tools </p>
+    <p class="mt-3">I help businesses & individuals build impactful Digital solutions  — from modern web apps to strategies. Let’s create something global together.</p>
+    <a href="/projects/" class="btn btn-primary btn-lg mt-4">View My Work</a>
+    <a href="/friends/" class="btn btn-outline-light btn-lg mt-2">Chat With Me</a>
   </div>
+</div>
 {% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'main/base.html' %}
+
+{% block title %}{{ profile.user.username }} — Profile{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-4">
+    {% if profile.photo %}
+      <img src="{{ profile.photo.url }}" alt="Profile photo" class="img-fluid rounded-circle shadow mb-3">
+    {% else %}
+      <img src="https://i.pinimg.com/736x/8d/a3/97/8da3970338c195e5c4fdd04045e71926.jpg" alt="Profile photo" class="img-fluid rounded-circle shadow mb-3 w-10 h-5">
+    {% endif %}
+    <h3>{{ profile.user.username }}</h3>
+    <p class="mt-3 text-primary fs-5 fw-3 text-center">{{ profile.bio|default:"No bio yet." }}</p>
+    <ul class="list-group mb-3">
+      <li class="list-group-item"><strong>Email:</strong> {{ profile.user.email }}</li>
+      <li class="list-group-item"><strong>Location:</strong> {{ profile.location|default:"Unknown" }}</li>
+    </ul>
+  </div>
+
+  <div class="col-md-8">
+    <h4>Projects</h4>
+    <div class="row">
+      {% for project in projects %}
+        <div class="col-md-6 mb-3">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5>{{ project.title }}</h5>
+              <p>{{ project.description|truncatewords:15 }}</p>
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <p class="text-muted">No projects yet.</p>
+      {% endfor %}
+    </div>
+
+    <hr>
+
+    <h4>Live Chat</h4>
+    <div id="chat-box" class="border rounded p-3 mb-3" style="height:300px; overflow-y:scroll; background:#f8f9fa;">
+      <!-- Messages will load here via WebSocket -->
+    </div>
+
+    <form id="chat-form" class="d-flex">
+      <input type="text" id="chat-message" class="form-control me-2" placeholder="Type a message...">
+      <button type="submit" class="btn btn-primary">Send</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const chatBox = document.getElementById("chat-box");
+  const chatForm = document.getElementById("chat-form");
+  const chatMessage = document.getElementById("chat-message");
+
+  // Replace 'waren' with dynamic username in your real app
+  const socket = new WebSocket(
+    "ws://" + window.location.host + "/ws/chat/waren/"
+  );
+
+  socket.onmessage = function(e) {
+    const data = JSON.parse(e.data);
+    const msg = document.createElement("div");
+    msg.textContent = data.user + ": " + data.message;
+    chatBox.appendChild(msg);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  };
+
+  chatForm.addEventListener("submit", function(e) {
+    e.preventDefault();
+    socket.send(JSON.stringify({
+      "message": chatMessage.value
+    }));
+    chatMessage.value = "";
+  });
+</script>
+{% endblock %}
